@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<button style="-webkit-appearance: -apple-pay-button;"></button>
+<script>
+
+document.querySelector("button").addEventListener("click", () => {
+
+const methods = [{
+  supportedMethods: "https://apple.com/apple-pay",
+  data: {
+    version: 3,
+    merchantIdentifier: "merchant.com.example",
+    merchantCapabilities: ["supports3DS", "supportsCredit", "supportsDebit"],
+    supportedNetworks: ["amex", "discover", "masterCard", "visa"],
+    countryCode: "US"
+  }
+}];
+
+const details = {
+  total: {
+    label: "My Merchant",
+    amount: { value: "27.50", currency: "USD" }
+  },
+  displayItems: [{
+    label: "Tax",
+    amount: { value: "2.50", currency: "USD" }
+  }, {
+    label: "Ground Shipping",
+    amount: { value: "5.00", currency: "USD" }
+  }],
+  shippingOptions: [{
+    id: "ground",
+    label: "Ground Shipping",
+    amount: { value: "5.00", currency: "USD" },
+    selected: true
+  }, {
+    id: "express",
+    label: "Express Shipping",
+    amount: { value: "10.00", currency: "USD" }
+  }]
+};
+
+const options = {
+  requestPayerName: true,
+  requestPayerEmail: true,
+  requestPayerPhone: true,
+  requestShipping: true,
+  shippingType: "shipping"
+};
+
+const pr = new PaymentRequest(methods, details, options);
+
+pr.show();
+
+});
+
+</script>
+</body>
+</html>
